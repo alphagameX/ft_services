@@ -1,0 +1,67 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: wordpress-deployment
+  labels:
+    app: wordpress
+spec:
+  selector:
+    matchLabels:
+      app: wordpress
+  template:
+    metadata:
+      labels:
+        app: wordpress
+    spec:
+      containers:
+      - name: wordpress
+        image: arthur/wordpress
+        imagePullPolicy: Never
+        livenessProbe:
+          periodSeconds: 2
+          initialDelaySeconds: 10
+          exec:
+            command:
+              - /bin/sh
+              - -c
+              - ./tmp/live.sh
+        ports:
+        - containerPort: 5050
+          name: http
+        envFrom:
+          - configMapRef:
+              name: env-config
+        env:
+          - name: WORDPRESS_ADMIN
+            value: admin
+          - name: WORDPRESS_ADMIN_PASSWORD
+            value: password
+          - name: WORDPRESS_ADMIN_EMAIL
+            value: a@gmail.com
+          - name: NODE_IP
+            valueFrom:
+              fieldRef:
+                fieldPath: status.hostIP
+        volumeMounts:
+          - name: wordpress-persistent-storage
+            mountPath: /var/wordpress/wp-content/uploads
+      volumes:
+      - name: wordpress-persistent-storage
+        persistentVolumeClaim:
+          claimName: wordpress-pv-claim
+---         
+apiVersion: v1
+kind: Service
+metadata:
+  name: wordpress
+  annotations:
+    metallb.universe.tf/allow-shared-ip: "sharing key"
+spec:
+  selector:
+    app: wordpress
+  type: LoadBalancer
+  ports:
+    - protocol: TCP
+      port: 5050
+      targetPort: 5050
+      name: http
