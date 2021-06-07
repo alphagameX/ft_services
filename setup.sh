@@ -98,4 +98,4 @@ printf "${BLUE}phpmyadmin ${RESTORE}| start in ${GREEN}${d7}s\n"
 printf "${BLUE}grafana    ${RESTORE}| start in ${GREEN}${d8}s\n\n\n"
 
 echo "Opening dashboard !..."
-minikube dashboard 2> /dev/null > /dev/null
+minikube dashboard 2> /dev/null > /dev/null & 

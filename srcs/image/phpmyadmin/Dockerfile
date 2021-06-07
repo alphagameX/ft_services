@@ -8,11 +8,11 @@ RUN openssl req -newkey rsa:4096 -x509 -sha256 -days 365 -nodes -out /etc/ssl/lo
 RUN apk add php7 php7-fpm php7-opcache
 RUN apk add php7-gd php7-mysqli php7-zlib php7-curl php7-phar php7-json php7-mbstring php7-ctype php7-simplexml php7-tokenizer php7-xmlwriter php-session php-bz2 php-zip
 
-RUN wget http://files.directadmin.com/services/all/phpMyAdmin/phpMyAdmin-5.0.2-all-languages.tar.gz
+ADD https://www.phpmyadmin.net/downloads/phpMyAdmin-latest-all-languages.tar.gz phpmyadmin.tar.gz
 
-RUN tar zxvf phpMyAdmin-5.0.2-all-languages.tar.gz
-RUN rm phpMyAdmin-5.0.2-all-languages.tar.gz
-RUN mv phpMyAdmin-5.0.2-all-languages /tmp/phpmyadmin
+RUN tar zxvf phpmyadmin.tar.gz
+RUN rm phpmyadmin.tar.gz
+RUN mv phpMyAdmin-5.1.1-all-languages /tmp/phpmyadmin
 RUN chmod -R 777 /tmp/phpmyadmin
 
 

@@ -7,15 +7,15 @@ build_image()
 
 delete_deployment() {
     if [ -n "$1" ]; then
-        docker image rm arthur/base
+        docker image rm arthur/base 
         docker image rm $1
         kubectl delete -f srcs/deploy/$1.yaml
     fi
 }
 create_deployement() { 
     if [ -n "$1" ]; then
-        build_image base
-        build_image $1
+        build_image base registry:2
+        build_image $1 registry:2
         kubectl create -f srcs/deploy/$1.yaml
     fi
 }
