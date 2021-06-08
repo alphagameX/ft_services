@@ -102,9 +102,9 @@ printf "${BLUE}mysql      ${RESTORE}| start in ${GREEN}${d2}s\n"
 printf "${BLUE}influxdb   ${RESTORE}| start in ${GREEN}${d3}s\n"
 printf "${BLUE}phpmyadmin ${RESTORE}| start in ${GREEN}${d4}s\n"
 printf "${BLUE}wordpress  ${RESTORE}| start in ${GREEN}${d5}s\n"
-# printf "${BLUE}ftps       ${RESTORE}| start in ${GREEN}${d6}s\n"
-# printf "${BLUE}nginx      ${RESTORE}| start in ${GREEN}${d7}s\n"
-# printf "${BLUE}grafana    ${RESTORE}| start in ${GREEN}${d8}s\n\n\n"
+printf "${BLUE}ftps       ${RESTORE}| start in ${GREEN}${d6}s\n"
+printf "${BLUE}nginx      ${RESTORE}| start in ${GREEN}${d7}s\n"
+printf "${BLUE}grafana    ${RESTORE}| start in ${GREEN}${d8}s\n\n\n"
 
 echo "Opening dashboard !..."
 minikube dashboard 2> /dev/null > /dev/null & 
