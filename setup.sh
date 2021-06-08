@@ -71,7 +71,7 @@ minikube delete > /dev/null
 if [ $(uname) = 'Darwin' ]; then
     minikube start --driver=hyperkit 
 else
-    minikube start 
+    minikube start --driver=docker
 fi
 res=$(date +%s)
 d1=$((res - now))

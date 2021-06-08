@@ -17,7 +17,7 @@
     /* Server parameters */
     $cfg['Servers'][$i]['host'] = 'mysql';
     $cfg['Servers'][$i]['compress'] = false;
-    $cfg['PmaAbsoluteUri'] = 'https://node_ip:5000/phpmyadmin';
+    $cfg['PmaAbsoluteUri'] = './';
     
 
 ?>
