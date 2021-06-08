@@ -3,7 +3,7 @@
 RESTORE='\033[0m'
 GREEN='\033[00;32m'
 BLUE='\033[00;34m'
-YELLOW="\033[33;32m"
+YELLOW="\033[33;5m"
 
 build_image()
 {
