@@ -17,9 +17,9 @@ create_deployement() {
         build_image $1
         printf "${BLUE}create deployment for $1 yaml${RESTORE}...\n"
         kubectl create -f srcs/deploy/$1.yaml 
-        while [ $( kubectl get pods -l app=influxdb -o json | jq '.items[0].status.conditions[1].status') = "\"False\"" ] 
+        while [ $( kubectl get pods -l app=$1 -o json | jq '.items[0].status.conditions[1].status') = "\"False\"" ] 
         do
-            printf "${YELLOW}Waiting for pods is ready${RESTORE}\r\n"
+            printf "${YELLOW}Waiting for pods is ready${RESTORE}\r"
             sleep 1
         done
         clear
@@ -33,7 +33,12 @@ clear
 printf "${BLUE}minikube starting...${RESTORE}\n"
 now=$(date +%s)
 minikube delete > /dev/null
-minikube start > /dev/null
+
+if [ $(uname) = 'Darwin' ]; then
+    minikube start --driver=hyperkit 
+else
+    minikube start 
+fi
 res=$(date +%s)
 d1=$((res - now))
 
@@ -92,9 +97,9 @@ clear
 
 printf "✓ ${GREEN} FT_SERVICE IS UP ! ${RESTORE}\n\n" 
 
-# printf "${BLUE}minikube   ${RESTORE}| start in ${GREEN}${d1}s\n"
+printf "${BLUE}minikube   ${RESTORE}| start in ${GREEN}${d1}s\n"
 printf "${BLUE}mysql      ${RESTORE}| start in ${GREEN}${d2}s\n"
-# printf "${BLUE}influxdb   ${RESTORE}| start in ${GREEN}${d3}s\n"
+printf "${BLUE}influxdb   ${RESTORE}| start in ${GREEN}${d3}s\n"
 printf "${BLUE}phpmyadmin ${RESTORE}| start in ${GREEN}${d4}s\n"
 # printf "${BLUE}wordpress  ${RESTORE}| start in ${GREEN}${d5}s\n"
 # printf "${BLUE}ftps       ${RESTORE}| start in ${GREEN}${d6}s\n"

@@ -18,9 +18,9 @@ create_deployement() {
         build_image base
         build_image $1
         kubectl create -f srcs/deploy/$1.yaml
-        while [ $( kubectl get pods -l app=influxdb -o json | jq '.items[0].status.conditions[1].status') = "\"False\"" ] 
+        while [ $( kubectl get pods -l app=$1 -o json | jq '.items[0].status.conditions[1].status') = "\"False\"" ] 
         do
-            echo -n -e "Waiting for pods is ready\r"
+            echo -e "Waiting for pods is ready\r"
             sleep 1
         done
     fi
