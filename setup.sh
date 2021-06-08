@@ -34,14 +34,30 @@ clear
 
 printf "${BLUE}Installing requirement...${RESTORE}\n"
 
-if ! which jq; then
-    if [ $(uname) = 'Darwin' ]; then
-        if ! which brew; then
-            /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-        fi
+
+if [ $(uname) = 'Darwin' ]; then
+    if ! which brew; then
+        /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+    fi
+
+    if ! which jq; then
         brew install jq
-    else
+    fi
+
+    if ! which hyperkit; then
+        brew install hyperkit
+    fi
+fi
+
+if [ $(uname) = "Linux" ]; then
+    if ! which jq; then
         sudo apt install jq -y
+    fi
+
+    if ! groups | grep docker; then
+        sudo groupadd docker
+        sudo usermod -aG docker $USER
+        newgrp docker 
     fi
 fi
 
