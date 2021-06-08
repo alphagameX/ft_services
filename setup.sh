@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 RESTORE='\033[0m'
 GREEN='\033[00;32m'
@@ -30,6 +30,23 @@ create_deployement() {
 }
 
 clear
+
+
+printf "${BLUE}Installing requirement...${RESTORE}\n"
+
+if ! which jq; then
+    if [ $(uname) = 'Darwin' ]; then
+        if ! which brew; then
+            /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+        fi
+        brew install jq
+    else
+        sudo apt install jq -y
+    fi
+fi
+
+printf "✓ ${GREEN}Requirement is installed !${RESTORE}\n"
+
 printf "${BLUE}minikube starting...${RESTORE}\n"
 now=$(date +%s)
 minikube delete > /dev/null
