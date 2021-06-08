@@ -3,7 +3,7 @@
 RESTORE='\033[0m'
 GREEN='\033[00;32m'
 BLUE='\033[00;34m'
-YELLOW="\033[33;"
+YELLOW="\033[33;32m"
 
 build_image()
 {
@@ -19,7 +19,7 @@ create_deployement() {
         kubectl create -f srcs/deploy/$1.yaml 
         while [ $( kubectl get pods -l app=influxdb -o json | jq '.items[0].status.conditions[1].status') = "\"False\"" ] 
         do
-            printf "${YELLOW}Waiting for pods is ready${RESTORE}\r"
+            printf "${YELLOW}Waiting for pods is ready${RESTORE}\r\n"
             sleep 1
         done
         clear
