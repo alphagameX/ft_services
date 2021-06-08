@@ -3,7 +3,7 @@
 RESTORE='\033[0m'
 GREEN='\033[00;32m'
 BLUE='\033[00;34m'
-
+YELLOW="\033[33;"
 
 build_image()
 {
@@ -17,6 +17,11 @@ create_deployement() {
         build_image $1
         printf "${BLUE}create deployment for $1 yaml${RESTORE}...\n"
         kubectl create -f srcs/deploy/$1.yaml 
+        while [ $( kubectl get pods -l app=influxdb -o json | jq '.items[0].status.conditions[1].status') = "\"False\"" ] 
+        do
+            printf "${YELLOW}Waiting for pods is ready${RESTORE}\r"
+            sleep 1
+        done
         clear
         printf "✓ ${GREEN}$1 is ready !${RESTORE}\n"
         res=$(date +%s)
@@ -28,8 +33,7 @@ clear
 printf "${BLUE}minikube starting...${RESTORE}\n"
 now=$(date +%s)
 minikube delete > /dev/null
-minikube start --driver=hyperkit > /dev/null
-
+minikube start > /dev/null
 res=$(date +%s)
 d1=$((res - now))
 
@@ -65,20 +69,20 @@ d2=$?
 create_deployement influxdb
 d3=$?
 
-create_deployement nginx
+create_deployement phpmyadmin
 d4=$?
 
-create_deployement wordpress
-d5=$?
+# create_deployement wordpress
+# d5=$?
 
-create_deployement ftps
-d6=$?
+# create_deployement ftps
+# d6=$?
 
-create_deployement phpmyadmin
-d7=$?
+# create_deployement nginx
+# d7=$?
 
-create_deployement grafana
-d8=$?
+# create_deployement grafana
+# d8=$?
 
 eval $(minikube docker-env -u)
 
@@ -88,14 +92,14 @@ clear
 
 printf "✓ ${GREEN} FT_SERVICE IS UP ! ${RESTORE}\n\n" 
 
-printf "${BLUE}minikube   ${RESTORE}| start in ${GREEN}${d1}s\n"
+# printf "${BLUE}minikube   ${RESTORE}| start in ${GREEN}${d1}s\n"
 printf "${BLUE}mysql      ${RESTORE}| start in ${GREEN}${d2}s\n"
-printf "${BLUE}influxdb   ${RESTORE}| start in ${GREEN}${d3}s\n"
-printf "${BLUE}nginx      ${RESTORE}| start in ${GREEN}${d4}s\n"
-printf "${BLUE}wordpress  ${RESTORE}| start in ${GREEN}${d5}s\n"
-printf "${BLUE}ftps       ${RESTORE}| start in ${GREEN}${d6}s\n"
-printf "${BLUE}phpmyadmin ${RESTORE}| start in ${GREEN}${d7}s\n"
-printf "${BLUE}grafana    ${RESTORE}| start in ${GREEN}${d8}s\n\n\n"
+# printf "${BLUE}influxdb   ${RESTORE}| start in ${GREEN}${d3}s\n"
+printf "${BLUE}phpmyadmin ${RESTORE}| start in ${GREEN}${d4}s\n"
+# printf "${BLUE}wordpress  ${RESTORE}| start in ${GREEN}${d5}s\n"
+# printf "${BLUE}ftps       ${RESTORE}| start in ${GREEN}${d6}s\n"
+# printf "${BLUE}nginx      ${RESTORE}| start in ${GREEN}${d7}s\n"
+# printf "${BLUE}grafana    ${RESTORE}| start in ${GREEN}${d8}s\n\n\n"
 
 echo "Opening dashboard !..."
 minikube dashboard 2> /dev/null > /dev/null & 

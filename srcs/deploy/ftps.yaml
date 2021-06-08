@@ -18,8 +18,8 @@ spec:
         image: arthur/ftps
         imagePullPolicy: Never
         livenessProbe:
-          periodSeconds: 2
-          initialDelaySeconds: 10
+          periodSeconds: 3
+          initialDelaySeconds: 15
           exec:
             command:
               - /bin/sh

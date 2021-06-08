@@ -11,20 +11,26 @@ spec:
   template:
     metadata:
       labels:
-        app: mysql
+        app: mysql 
     spec:
       containers:
       - name: mysql
         image: arthur/mysql
         imagePullPolicy: Never
         livenessProbe:
-          periodSeconds: 2
-          initialDelaySeconds: 10
+          periodSeconds: 3
+          initialDelaySeconds: 15
           exec:
             command:
               - /bin/sh
               - -c
               - ./tmp/live.sh
+        readinessProbe:
+          exec:
+            command:
+              - ./tmp/ready.sh
+          periodSeconds: 2
+          failureThreshold: 30
         ports:
         - containerPort: 3306
           name: http
@@ -38,7 +44,6 @@ spec:
       - name: mysql-persistent-storage
         persistentVolumeClaim:
           claimName: mysql-pv-claim
-        
 ---
 
 apiVersion: v1
