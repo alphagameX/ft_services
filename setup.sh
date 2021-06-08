@@ -45,6 +45,7 @@ if ! which jq; then
     fi
 fi
 
+clear
 printf "✓ ${GREEN}Requirement is installed !${RESTORE}\n"
 
 printf "${BLUE}minikube starting...${RESTORE}\n"
