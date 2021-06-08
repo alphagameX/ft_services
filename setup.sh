@@ -28,7 +28,7 @@ clear
 printf "${BLUE}minikube starting...${RESTORE}\n"
 now=$(date +%s)
 minikube delete > /dev/null
-minikube start > /dev/null
+minikube start --driver=hyperkit > /dev/null
 
 res=$(date +%s)
 d1=$((res - now))
