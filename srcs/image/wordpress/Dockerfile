@@ -24,9 +24,9 @@ RUN chmod +x wp-cli.phar && mv wp-cli.phar /usr/local/bin/wp
 RUN wp core download --locale=fr_FR --path="/var/wordpress/"
 
 
-COPY run.sh /tmp
-COPY default.conf etc/nginx/http.d/default.conf
-COPY live.sh /tmp/live.sh
+COPY files/run.sh /tmp
+COPY files/default.conf etc/nginx/http.d/default.conf
+COPY probe/live.sh /tmp/live.sh
 RUN chmod +x /tmp/live.sh
 
 CMD [ "sh", "/tmp/run.sh" ]

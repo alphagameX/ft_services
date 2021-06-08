@@ -20,7 +20,7 @@ create_deployement() {
         kubectl create -f srcs/deploy/$1.yaml
         while [ $( kubectl get pods -l app=$1 -o json | jq '.items[0].status.conditions[1].status') = "\"False\"" ] 
         do
-            echo -e "Waiting for pods is ready\r"
+            printf "Waiting for pods is ready\r"
             sleep 1
         done
     fi

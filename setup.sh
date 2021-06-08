@@ -77,8 +77,8 @@ d3=$?
 create_deployement phpmyadmin
 d4=$?
 
-# create_deployement wordpress
-# d5=$?
+create_deployement wordpress
+d5=$?
 
 # create_deployement ftps
 # d6=$?
@@ -101,7 +101,7 @@ printf "${BLUE}minikube   ${RESTORE}| start in ${GREEN}${d1}s\n"
 printf "${BLUE}mysql      ${RESTORE}| start in ${GREEN}${d2}s\n"
 printf "${BLUE}influxdb   ${RESTORE}| start in ${GREEN}${d3}s\n"
 printf "${BLUE}phpmyadmin ${RESTORE}| start in ${GREEN}${d4}s\n"
-# printf "${BLUE}wordpress  ${RESTORE}| start in ${GREEN}${d5}s\n"
+printf "${BLUE}wordpress  ${RESTORE}| start in ${GREEN}${d5}s\n"
 # printf "${BLUE}ftps       ${RESTORE}| start in ${GREEN}${d6}s\n"
 # printf "${BLUE}nginx      ${RESTORE}| start in ${GREEN}${d7}s\n"
 # printf "${BLUE}grafana    ${RESTORE}| start in ${GREEN}${d8}s\n\n\n"
