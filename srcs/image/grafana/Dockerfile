@@ -12,12 +12,12 @@ RUN rm grafana-7.5.7.linux-amd64.tar.gz
 RUN apk add libc6-compat
 RUN apk update && apk add 
 
-COPY default.conf etc/nginx/http.d/default.conf
-COPY grafana.db grafana/data/grafana.db
-COPY defaults.ini grafana/conf/defaults.ini
-COPY run.sh /tmp/run.sh
+COPY files/default.conf etc/nginx/http.d/default.conf
+COPY files/grafana.db grafana/data/grafana.db
+COPY files/defaults.ini grafana/conf/defaults.ini
+COPY files/run.sh tmp/run.sh
 
-COPY live.sh /tmp/live.sh
-RUN chmod +x /tmp/live.sh
+COPY probe/live.sh tmp/live.sh
+RUN chmod +x tmp/live.sh
 
 CMD ["sh", "tmp/run.sh"]

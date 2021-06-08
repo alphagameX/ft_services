@@ -19,7 +19,7 @@ spec:
         imagePullPolicy: Never
         livenessProbe:
           periodSeconds: 3
-          initialDelaySeconds: 15
+          initialDelaySeconds: 60
           exec:
             command:
               - /bin/sh
@@ -29,11 +29,11 @@ spec:
           httpGet:
             path: /
             port: http
-          initialDelaySeconds: 3
-          periodSeconds: 3
+          periodSeconds: 2
+          failureThreshold: 30
         ports:
-        - containerPort: 5000
-          name: http
+        - name: http
+          containerPort: 5000
         envFrom:
           - configMapRef:
               name: env-config

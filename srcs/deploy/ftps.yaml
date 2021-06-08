@@ -19,12 +19,18 @@ spec:
         imagePullPolicy: Never
         livenessProbe:
           periodSeconds: 3
-          initialDelaySeconds: 15
+          initialDelaySeconds: 60
           exec:
             command:
               - /bin/sh
               - -c
               - ./tmp/live.sh
+        readinessProbe:
+          exec:
+            command:
+              - ./tmp/ready.sh
+          periodSeconds: 2
+          failureThreshold: 30
         env:
           - name: FTP_USER
             valueFrom:

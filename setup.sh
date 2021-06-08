@@ -80,14 +80,14 @@ d4=$?
 create_deployement wordpress
 d5=$?
 
-# create_deployement ftps
-# d6=$?
+create_deployement ftps
+d6=$?
 
-# create_deployement nginx
-# d7=$?
+create_deployement nginx
+d7=$?
 
-# create_deployement grafana
-# d8=$?
+create_deployement grafana
+d8=$?
 
 eval $(minikube docker-env -u)
 

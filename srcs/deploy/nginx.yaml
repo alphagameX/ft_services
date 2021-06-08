@@ -19,17 +19,25 @@ spec:
         imagePullPolicy: Never
         livenessProbe:
           periodSeconds: 3
-          initialDelaySeconds: 15
+          initialDelaySeconds: 60
           exec:
             command:
               - /bin/sh
               - -c
               - ./tmp/live.sh
+        readinessProbe:
+          httpGet:
+            scheme: HTTPS
+            path: /
+            port: ssl
+          periodSeconds: 2
+          failureThreshold: 30
         ports:
-        - containerPort: 80
-          name: http
-        - containerPort: 443
-          name: ssl
+        - name: http
+          containerPort: 80
+        - name: ssl
+          containerPort: 443
+          
 ---  
 apiVersion: v1
 kind: Service

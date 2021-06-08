@@ -20,7 +20,7 @@ spec:
         imagePullPolicy: Never
         livenessProbe:
           periodSeconds: 3
-          initialDelaySeconds: 15
+          initialDelaySeconds: 60
           exec:
             command:
               - /bin/sh
