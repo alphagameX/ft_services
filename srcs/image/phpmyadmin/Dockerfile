@@ -17,9 +17,9 @@ RUN chmod -R 777 /tmp/phpmyadmin
 
 
 COPY files/default.conf /etc/nginx/conf.d/default.conf 
-COPY run.sh .
+COPY files/run.sh run.sh
 COPY files/config.inc.php /tmp/phpmyadmin/config.inc.php
-COPY files/live.sh /tmp/live.sh
+COPY probe/live.sh /tmp/live.sh
 RUN chmod +x /tmp/live.sh
 
 CMD [ "sh", "run.sh"]
