@@ -5,8 +5,232 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Odibee+Sans&display=swap" rel="stylesheet">
 </head>
 <body>
-    <p>Salut mec</p>
+    <div id="app">
+        <div class="header">
+            <h1>{{welcome}}</h1>
+            <p>{{by}}</p>
+        </div>
+
+
+        <div class="services">
+
+            <transition name="fade">
+                <div class="credentials" v-if="credentials != false">
+                   <div @click="toggleCredentials(false)">
+                        <h3>Credentials for {{credentials.name}}</h3>
+                        <p>Username: {{credentials.username}}</p>
+                        <p>Password: {{credentials.password}}</p>
+                   </div>
+                </div>
+            </transition>
+
+            <div class="service" v-for="service in services">
+                <h3>
+                    {{service.name}}
+                    <img v-if="service.hasUser" @click="toggleCredentials(service)" src="https://image.flaticon.com/icons/png/512/1/1176.png"/>
+                </h3>
+                <p>Port: {{service.port}}</p>
+                <p v-if="service.accessible">Ip: {{ip}}</p>
+                <a v-if="service.accessible" target="_blank" :href="`https://${ip}:${getPort(service.port)}`">Go</a>
+            </div>
+        </div>
+    </div>
+
+
+
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+    <script>
+        const App = new Vue({
+            el: "#app",
+            data: {
+                welcome: "Welcome in ft_services",
+                ip: window.location.origin.replace('https://', ''),
+                by: "By atinseau",
+                credentials: false,
+                services: [
+                    {
+                        name: "Nginx",
+                        port: "443/80",
+                        hasUser: false,
+                        accessible: true
+                    },
+                    {
+                        name: "Grafana",
+                        port: "3000",
+                        hasUser: true,
+                        accessible: true,
+                        username: "admin",
+                        password: "admin"
+                    },
+                    {
+                        name: "Phpmyadmin",
+                        port: "5000",
+                        hasUser: true,
+                        accessible: true,
+                        username: "USERNAME_PHPMYADMIN",
+                        password: "PASSWORD_PHPMYADMIN"
+                    },
+                    {
+                        name: "Wordpress",
+                        port: "5050",
+                        hasUser: true,
+                        accessible: true,
+                        username: "USERNAME_WORDPRESS",
+                        password: "PASSWORD_WORDPRESS"
+                    },
+                    {
+                        name: "Ftps",
+                        port: "21/20",
+                        hasUser: true,
+                        accessible: false,
+                        username: "USERNAME_FTPS",
+                        password: "PASSWORD_FTPS"
+                    },
+                    {
+                        name: "Mysql",
+                        port: "3306",
+                        hasUser: true,
+                        accessible: false,
+                        username: "USERNAME_MYSQL",
+                        password: "PASSWORD_MYSQL"
+                    },
+                    {
+                        name: "Influxdb",
+                        port: "8086",
+                        hasUser: false,
+                        accessible: false
+                    }
+                ]
+            },
+            methods: {
+                toggleCredentials(service) {
+                    if(this.credentials == false)
+                        this.credentials = service
+                    else
+                        this.credentials = false
+                },
+                getPort(port) {
+                    if(port.includes('/'))
+                        return port.split('/')[0]
+                    return port
+                }
+            }
+        })
+    </script>
+
+
+    <style>
+        *, html  {
+            margin: 0;
+            padding: 0;
+            font-family: 'Odibee Sans', cursive;
+        }
+
+        #app {
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            flex-direction: column;
+        }
+
+        .header {
+            margin-top: 50px;
+        }
+
+        .header p {
+            text-align: center;
+            letter-spacing: 3px;
+        }
+
+        .credentials {
+            top: 0;
+            left: 0;
+            position: absolute;
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1;
+        }
+
+        .credentials div {
+            display: flex;
+            align-items: center;
+            justify-items: center;
+            flex-direction: column;
+            cursor: pointer;
+            padding: 20px;
+            border-radius: 500px;
+            max-width: 400px;
+            width: 100%;
+            background-color: white;
+            box-shadow: 0 0 20px 1px #00000017;
+        }
+
+        .credentials div p:first-of-type {
+            margin-top: 10px;
+        }
+
+        .services {
+            max-width: 1000px;
+            width: -webkit-fill-available;
+            padding: 0 30px;
+            margin: auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr 1fr;
+            row-gap: 30px;
+        }
+
+        .services .service {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+        }
+
+        .services .service h3 {
+            position: relative;
+            font-size: 24px;
+            margin-bottom: 12px;
+        }
+
+        .services .service h3 img {
+            width: 15px;
+            cursor: pointer;
+            position: absolute;
+            right: -12px;
+            bottom: -7px;
+        }
+
+        .services .service a {
+            margin-top: 10px;
+            background-color: black;
+            padding: 4px 30px;
+            border-radius: 500px;
+            color: white;
+            text-decoration: none;
+        }
+
+        @media (max-width: 600px) {
+            .services {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        .fade-enter-active, .fade-leave-active {
+            transition: opacity .5s;
+        }
+        .fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+            opacity: 0;
+        }
+
+    </style>
+   
 </body>
 </html>

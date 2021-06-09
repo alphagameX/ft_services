@@ -39,12 +39,6 @@ spec:
           - configMapRef:
               name: env-config
         env:
-          - name: WORDPRESS_ADMIN
-            value: admin
-          - name: WORDPRESS_ADMIN_PASSWORD
-            value: password
-          - name: WORDPRESS_ADMIN_EMAIL
-            value: a@gmail.com
           - name: NODE_IP
             valueFrom:
               fieldRef:
