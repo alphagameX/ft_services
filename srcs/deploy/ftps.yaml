@@ -42,6 +42,10 @@ spec:
               configMapKeyRef:
                 name: env-config
                 key: FTP_PASSWORD
+          - name: NODE_IP
+            valueFrom:
+              fieldRef:
+                fieldPath: status.hostIP
         ports:
           - containerPort: 21
           - containerPort: 20
