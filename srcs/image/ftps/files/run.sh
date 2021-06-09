@@ -5,7 +5,7 @@ addgroup $FTP_USER $FTP_USER
 
 echo $FTP_USER:$FTP_PASSWORD | chpasswd
 
-sed -i -e "s/NODE_IP/$NODE_ID" etc/vsftpd/vsftpd.conf
+sed -i -e "s/NODE_IP/$NODE_IP/g" etc/vsftpd/vsftpd.conf
 
 echo "salut mec!" | tee /var/volume/helloWorld
 
