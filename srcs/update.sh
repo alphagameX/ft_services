@@ -10,7 +10,7 @@ delete_deployment() {
         docker image rm arthur/base 
         docker image rm $1
         kubectl delete -f srcs/deploy/$1.yaml
-        # kubectl delete pod -l app=$1
+        kubectl delete pod -l app=$1 
     fi
 }
 create_deployement() { 
